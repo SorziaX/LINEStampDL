@@ -1,0 +1,32 @@
+{
+  "name": "linestampdl",
+  "version": "1.0.0",
+  "description": "line stamp download tool",
+  "main": "LINEStampDL.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "css": "^2.2.4",
+    "request": "^2.88.0",
+    "single-line-log": "^1.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node LINEStampDL stamps https://store.line.me/stickershop/product/6075864/ja"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SorziaX/LINEStampDL.git"
+  },
+  "keywords": [
+    "LINEStampDL",
+    "LINE",
+    "stamp",
+    "sticker"
+  ],
+  "author": "SorziaX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SorziaX/LINEStampDL/issues"
+  },
+  "homepage": "https://github.com/SorziaX/LINEStampDL#readme"
+}

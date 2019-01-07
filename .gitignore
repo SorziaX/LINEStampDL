@@ -1,2 +1,5 @@
-### macOS ###
+#macOS
+.DS_Store
+
+#nodejs
 node_modules/

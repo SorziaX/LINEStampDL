@@ -6,10 +6,10 @@ Tool to download stamps from LINE Store easily.
 ## Command
 `node LINEStampDL [dirname] [weburl]`
 
-dirname:__
+__dirname:__
 The directory that put all downloaded stamps to.Directory will be created if not existed.
 
-weburl:__
+__weburl:__
 Url of the stamp webpage in LINE store.
 
 ## Example

@@ -23,6 +23,7 @@ pb.render({ completed: 0, total: 1 });
 
 //get the html
 var opt = url.parse(htmlUrl);
+var html;
 https.get(opt, function(res) {
     res.setEncoding('utf-8');
     res.on('data', function(chunk) {

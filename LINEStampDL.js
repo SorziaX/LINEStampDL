@@ -19,7 +19,7 @@ var htmlUrl = args[1];
 var needed = 0;
 var finished = 0;
 var pb = new ProgressBar('Progress', 40);
-pb.render({ completed: 0, total: 1 });
+pb.render({ completed: 0, total: 2 });
 
 //get the html
 var opt = url.parse(htmlUrl);
@@ -31,6 +31,9 @@ https.get(opt, function(res) {
     });
 
     res.on('end', function() {
+
+        pb.render({ completed: 1, total: 2 });
+
         if(!fs.existsSync(dirName)){
             fs.mkdirSync(dirName);
         }

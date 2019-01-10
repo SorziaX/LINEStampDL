@@ -41,32 +41,51 @@ https.get(opt, function(res) {
             fs.mkdirSync(dirName);
         }
 
-        var $ = cheerio.load(html);
-        var spans = $('span[class=mdCMN09Image]');
-        spans.each(function(index, elem) {
-            var style = $(this).attr("style");
-            var object = css.parse("span{"+style+"}");
-
-            object.stylesheet.rules[0].declarations.forEach(function(item,i,array){
-                if(item.property == 'background-image'){
-                    var thumbURL = item.value.slice(4,item.value.length - 1);
-
-                    var code = lineStampCodeFromThumbURL(thumbURL);
-                    var url = urlFromCodeTemplate(code , animation_url_template);
-
-                    downloadImageFile(url, dirName + "/" + code + ".png",function(){
-                        url = urlFromCodeTemplate(code , image_url_template);
-                        downloadImageFile(url, dirName + "/" + code + ".png");
-                    });
-                }
-            });
-
-            needed++;
-        });
+        var thumbURLs = thumbURLsFromLINEStoreHTML(html);
+        for (const index in thumbURLs) {
+            if (thumbURLs.hasOwnProperty(index)) {
+                const thumbURL = thumbURLs[index];
+                downloadImageFromThumbURL(thumbURL);
+            }
+        }
     });
 }).on('error', function(err) {
     endWithError("can't access to the given url");
 });
+
+function downloadImageFromThumbURL(thumbURL){
+
+    var code = lineStampCodeFromThumbURL(thumbURL);
+    var url = urlFromCodeTemplate(code , animation_url_template);
+
+    setTimeout(function(){
+        downloadImageFile(url, dirName + "/" + code + ".png",function(){
+            url = urlFromCodeTemplate(code , image_url_template);
+            downloadImageFile(url, dirName + "/" + code + ".png");
+        });
+    },500 * needed);
+
+    needed++;
+} 
+
+function thumbURLsFromLINEStoreHTML(html){
+    var urls = [];
+    var $ = cheerio.load(html);
+    var spans = $('span[class=mdCMN09Image]');
+    spans.each(function(index, elem) {
+        var style = $(this).attr("style");
+        var object = css.parse("span{"+style+"}");
+
+        object.stylesheet.rules[0].declarations.forEach(function(item,i,array){
+            if(item.property == 'background-image'){
+                var thumbURL = item.value.slice(4,item.value.length - 1);
+                urls.push(thumbURL);
+            }
+        });
+    });
+
+    return urls;
+}
 
 function urlFromCodeTemplate(code,template){
     var url = "";

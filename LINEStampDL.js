@@ -42,6 +42,9 @@ https.get(opt, function(res) {
         }
 
         var thumbURLs = thumbURLsFromLINEStoreHTML(html);
+        if(thumbURLs.length == 0){
+            endWithError("can't find any stamp");
+        }
         for (const index in thumbURLs) {
             if (thumbURLs.hasOwnProperty(index)) {
                 const thumbURL = thumbURLs[index];
@@ -71,7 +74,7 @@ function downloadImageFromThumbURL(thumbURL){
 function thumbURLsFromLINEStoreHTML(html){
     var urls = [];
     var $ = cheerio.load(html);
-    var spans = $('span[class=mdCMN09Image]');
+    var spans = $('.mdCMN09Image');
     spans.each(function(index, elem) {
         var style = $(this).attr("style");
         var object = css.parse("span{"+style+"}");
